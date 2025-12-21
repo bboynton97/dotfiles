@@ -1,8 +1,19 @@
+# Exit early if not running in zsh
+[[ -z "$ZSH_VERSION" ]] && return
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+
+# Install Oh My Zsh if it doesn't exist
+if [[ ! -d "$ZSH" ]]; then
+  echo "Oh My Zsh not found. Installing..."
+  git clone https://github.com/ohmyzsh/ohmyzsh.git "$ZSH" 2>/dev/null || {
+    echo "Failed to install Oh My Zsh. Please check your internet connection."
+  }
+fi
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
@@ -73,7 +84,20 @@ ZSH_THEME="philips"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git macos brew docker kubectl zsh-autosuggestions zsh-syntax-highlighting)
 
-source $ZSH/oh-my-zsh.sh
+# Install zsh-autosuggestions if not present
+if [[ ! -d "${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-autosuggestions" ]]; then
+  echo "Installing zsh-autosuggestions..."
+  git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-autosuggestions" 2>/dev/null || true
+fi
+
+# Install zsh-syntax-highlighting if not present
+if [[ ! -d "${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting" ]]; then
+  echo "Installing zsh-syntax-highlighting..."
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting "${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting" 2>/dev/null || true
+fi
+
+# Source Oh My Zsh if it exists
+[[ -f "$ZSH/oh-my-zsh.sh" ]] && source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -104,7 +128,10 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-PROMPT='%{$fg[$NCOLOR]%}%B%n%b%{$reset_color%}@${${(%):-%m}/#US*/mbp}:%{$fg[blue]%}%B%c/%b%{$reset_color%} $(git_prompt_info)%(!.🔓.%(?.⛓️.⛓️‍💥))  '
+# Custom prompt (only if Oh My Zsh loaded successfully)
+if [[ -n "$ZSH" ]] && type git_prompt_info &>/dev/null; then
+  PROMPT='%{$fg[$NCOLOR]%}%B%n%b%{$reset_color%}@${${(%):-%m}/#US*/mbp}:%{$fg[blue]%}%B%c/%b%{$reset_color%} $(git_prompt_info)%(!.🔓.%(?.⛓️.⛓️‍💥))  '
+fi
 
 # bun completions
 [ -s "/Users/braelyn/.bun/_bun" ] && source "/Users/braelyn/.bun/_bun"
@@ -113,11 +140,14 @@ PROMPT='%{$fg[$NCOLOR]%}%B%n%b%{$reset_color%}@${${(%):-%m}/#US*/mbp}:%{$fg[blue
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-. "$HOME/.local/bin/env"
+# Source local env if it exists
+[[ -f "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
 
-. "$HOME/.atuin/bin/env"
-
-eval "$(atuin init zsh)"
+# Atuin shell history
+if [[ -f "$HOME/.atuin/bin/env" ]]; then
+  . "$HOME/.atuin/bin/env"
+  command -v atuin &>/dev/null && eval "$(atuin init zsh)"
+fi
 
 # opencode
 export PATH=/Users/braelyn/.opencode/bin:$PATH
