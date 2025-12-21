@@ -121,3 +121,4 @@ eval "$(atuin init zsh)"
 
 # opencode
 export PATH=/Users/braelyn/.opencode/bin:$PATH
+export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
