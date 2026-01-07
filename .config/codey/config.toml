@@ -1,0 +1,6 @@
+[general]
+model = "claude-sonnet-4-20250514"
+max_tokens = 8192
+
+[ui]
+theme = "base16-ocean.dark"
