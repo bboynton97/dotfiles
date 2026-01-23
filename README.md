@@ -5,3 +5,6 @@ These are the dotfiles that configure my terminal. I keep getting pissed off whe
 ## Atuin
 
 Aliases are managed in Atuin. It's super handy.
+
+## Add support for Ghostty to new terminals
+`infocmp -x | ssh user@host -- tic -x -`

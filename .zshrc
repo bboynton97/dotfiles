@@ -155,4 +155,6 @@ export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
 
 
 # Load Angular CLI autocompletion.
-source <(ng completion script)
+if [[ -f "$HOME/.local/bin/ng" ]]; then
+  source <(ng completion script);
+fi
