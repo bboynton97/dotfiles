@@ -158,3 +158,37 @@ export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
 if [[ -f "$HOME/.local/bin/ng" ]]; then
   source <(ng completion script);
 fi
+
+# Welcome message with ASCII art and fortune
+
+# Install figlet if not present
+if ! command -v figlet &>/dev/null; then
+  if command -v brew &>/dev/null; then
+    echo "Installing figlet..."
+    brew install figlet 2>/dev/null || true
+  fi
+fi
+
+# Install fortune if not present
+if ! command -v fortune &>/dev/null; then
+  if command -v brew &>/dev/null; then
+    echo "Installing fortune..."
+    brew install fortune 2>/dev/null || true
+  fi
+fi
+
+# Display ASCII art greeting
+if command -v figlet &>/dev/null; then
+  figlet -f epic "hello baddie"
+else
+  echo "==================================="
+  echo "      HELLO BADDIE"
+  echo "==================================="
+fi
+
+# Display fortune
+if command -v fortune &>/dev/null; then
+  echo ""
+  fortune
+  echo ""
+fi
