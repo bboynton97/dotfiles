@@ -211,11 +211,11 @@ fi
 export PATH="$HOME/.npm-global/bin:$PATH"
 
 # Created by `pipx` on 2026-02-16 06:59:14
-export PATH="$PATH:/home/braelyn/.local/bin"
+export PATH="$PATH:$HOME/.local/bin"
 
 # OpenClaw Completion
-source "/home/braelyn/.openclaw/completions/openclaw.zsh"
+[[ -f "$HOME/.openclaw/completions/openclaw.zsh" ]] && source "$HOME/.openclaw/completions/openclaw.zsh"
 # Browserbase API
-source ~/.openclaw/secrets/browserbase.env
+[[ -f "$HOME/.openclaw/secrets/browserbase.env" ]] && source "$HOME/.openclaw/secrets/browserbase.env"
 
 eval "$(atuin ai init zsh)"
