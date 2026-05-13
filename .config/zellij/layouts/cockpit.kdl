@@ -13,39 +13,30 @@ layout {
             args "/Users/braelynboynton/Developer/dotfiles/scripts/starfield.py"
         }
         floating_panes {
-            pane focus=true {
+            pane focus=true pinned=true {
                 x "25%"
                 y "20%"
                 width "23%"
                 height "55%"
                 name "terminal"
             }
-            pane {
+            pane pinned=true {
                 x "50%"
                 y "20%"
                 width "22%"
                 height "25%"
                 name "worktrees"
-                command "bash"
-                args "-ic" "watch -n 5 'git worktree list'"
+                command "zsh"
+                args "/Users/braelynboynton/Developer/dotfiles/scripts/worktrees.sh"
             }
-            pane {
+            pane pinned=true {
                 x "50%"
                 y "47%"
                 width "22%"
                 height "28%"
                 name "agents"
-                command "bash"
-                args "-ic" "echo 'agent monitor placeholder'; exec bash"
-            }
-        }
-    }
-    tab name="dev1" {
-        pane split_direction="vertical" {
-            pane size="33%" name="left"
-            pane split_direction="horizontal" {
-                pane size="50%" name="top-right"
-                pane name="bottom-right"
+                command "mob"
+                args "cat"
             }
         }
     }
