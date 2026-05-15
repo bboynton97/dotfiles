@@ -169,6 +169,7 @@ while true; do
     render
     flush_stdin
 
+    key=""
     read -rsk1 -t 5 key
     case "$key" in
         n) prompt_new ;;
