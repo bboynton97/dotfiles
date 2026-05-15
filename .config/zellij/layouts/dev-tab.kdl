@@ -6,8 +6,8 @@ layout {
         pane size="33%" split_direction="horizontal" {
             pane name="cmd"
             pane size="15%" name="agents" {
-                command "mob"
-                args "cat"
+                command "zsh"
+                args "-c" "MOB_FG=#cdd6f4 MOB_BG=#1e1e2e exec mob cat"
             }
         }
         pane split_direction="horizontal" {
