@@ -219,3 +219,12 @@ export PATH="$PATH:$HOME/.local/bin"
 [[ -f "$HOME/.openclaw/secrets/browserbase.env" ]] && source "$HOME/.openclaw/secrets/browserbase.env"
 
 eval "$(atuin ai init zsh)"
+
+cockpit() {
+  local session="${PWD##*/}"
+  if zellij list-sessions 2>/dev/null | sed $'s/\x1b\[[0-9;]*m//g' | grep -q "^${session} "; then
+    zellij attach "$session"
+  else
+    zellij -l cockpit -s "$session"
+  fi
+}
